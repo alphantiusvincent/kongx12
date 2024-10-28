@@ -1,0 +1,95 @@
+import copy
+
+class Queue:
+    def __init__(self):
+        self.data = []
+
+    def enqueue(self, data):
+        self.data.append(data)
+
+    def dequeue(self):
+        if len(self.data) == 0:
+            return None
+        return self.data.pop(0)
+
+    def front(self):
+        if len(self.data) == 0:
+            return None
+        return self.data[0]
+
+    def get_length(self):
+        return len(self.data)
+
+    def write_all_data(self):
+        print("DATA: ")
+        for data in self.data:
+            print(data)
+
+
+# Fungsi untuk mendapatkan nilai minimum dalam queue
+def get_min(queue):
+    try:
+        queue_copy = copy.deepcopy(queue)
+        if queue_copy.get_length() == 0:
+            return None
+
+        min_value = None
+        for _ in range(queue_copy.get_length()):
+            current = queue_copy.front()
+            if min_value is None or current < min_value:
+                min_value = current
+            queue_copy.dequeue()
+        return min_value
+
+    except Exception as e:
+        print(f"Error in get_min: {e}")
+        return None
+
+
+# Fungsi untuk mengambil elemen terakhir dalam queue
+def pop(queue):
+    try:
+        if queue.get_length() == 0:
+            return None
+
+        for _ in range(queue.get_length() - 1):
+            queue.enqueue(queue.dequeue())
+        return queue.dequeue()
+
+    except Exception as e:
+        print(f"Error in pop: {e}")
+        return None
+
+
+# Test case
+if __name__ == "__main__":
+    q = Queue()
+    for i in [10, 8, 5, 60, 1, 2, 3, 4, 100]:
+        q.enqueue(i)
+
+    print("==========")
+    print("Data Awal")
+    q.write_all_data()
+    print("==========")
+    print(f"Data terkecil = {get_min(q)}")
+    print("==========")
+    print()
+
+    print("Pembuktian isi queue tidak berubah")
+    print("==========")
+    print("Data Akhir")
+    q.write_all_data()
+    print("==========")
+    print()
+
+    print("============")
+    print("Percobaan Pop")
+    print(f"pop - 1 = {pop(q)}")
+    print(f"pop - 2 = {pop(q)}")
+    print(f"pop - 3 = {pop(q)}")
+    print("=============")
+    print("Hasil Akhir: ")
+    q.write_all_data()
+    print("=============")
+
+            
