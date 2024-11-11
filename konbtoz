@@ -1,0 +1,108 @@
+def mergesort(data):
+    if len(data) > 1:
+        mid = len(data) // 2
+        left = data[:mid]
+        right = data[mid:]
+
+        mergesort(left)
+        mergesort(right)
+
+        i = j = k = 0
+
+        while i < len(left) and j < len(right):
+            if left[i][1] >= right[j][1]:
+                data[k] = left[i]
+                i += 1
+            else:
+                data[k] = right[j]
+                j += 1
+            k += 1
+
+        while i < len(left):
+            data[k] = left[i]
+            i += 1
+            k += 1
+
+        while j < len(right):
+            data[k] = right[j]
+            j += 1
+            k += 1
+
+class PriorityQueueSorted:
+    def __init__(self):
+        self.data = []
+
+    def is_empty(self):
+        return len(self.data) == 0
+
+    def __len__(self):
+        return len(self.data)
+
+    def peek(self):
+        try:
+            if not self.is_empty():
+                print(f"Peek: {self.data[0]}")
+                return self.data[0]
+            else:
+                raise IndexError("Queue is empty. Cannot peek.")
+        except IndexError as e:
+            print(f"Error: {e}")
+
+    def add(self, name, priority):
+        self.data.append((name, priority))
+        mergesort(self.data)
+
+    def remove(self):
+        try:
+            if not self.is_empty():
+                removed = self.data.pop(0)
+                print(f"Removed: {removed}")
+            else:
+                raise IndexError("Queue is empty. Cannot remove.")
+        except IndexError as e:
+            print(f"Error: {e}")
+
+    def print_all(self):
+        try:
+            if not self.is_empty():
+                print("Queue:", self.data)
+            else:
+                raise IndexError("Queue is empty. Nothing to print.")
+        except IndexError as e:
+            print(f"Error: {e}")
+
+# Testing kode dengan try-except
+myQueue = PriorityQueueSorted()
+
+myQueue.add('Gian', 2)
+myQueue.add('Kezia', 4)
+myQueue.print_all()  # Output yang diharapkan: Queue: [('Kezia', 4), ('Gian', 2)]
+
+print(myQueue.peek())  # Output yang diharapkan: Peek: ('Kezia', 4)
+print()
+
+myQueue.add('Glen', 8)
+myQueue.add('Christo', 1)
+myQueue.print_all()  # Output yang diharapkan: Queue: [('Glen', 8), ('Kezia', 4), ('Gian', 2), ('Christo', 1)]
+
+print(myQueue.peek())  # Output yang diharapkan: Peek: ('Glen', 8)
+print()
+
+print("========REMOVE========")
+myQueue.remove()  # Menghapus elemen dengan prioritas tertinggi ('Glen', 8)
+myQueue.print_all()  # Output yang diharapkan: Queue: [('Kezia', 4), ('Gian', 2), ('Christo', 1)]
+
+print()
+
+myQueue.remove()  # Menghapus elemen berikutnya ('Kezia', 4)
+myQueue.print_all()  # Output yang diharapkan: Queue: [('Gian', 2), ('Christo', 1)]
+
+print()
+
+myQueue.remove()  # Menghapus elemen berikutnya ('Gian', 2)
+myQueue.print_all()  # Output yang diharapkan: Queue: [('Christo', 1)]
+
+print()
+
+myQueue.add('Saya', 7)
+myQueue.print_all()  # Output yang diharapkan: Queue: [('Saya', 7), ('Christo', 1)]
