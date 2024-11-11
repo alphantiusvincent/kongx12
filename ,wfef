@@ -1,0 +1,154 @@
+class PriorityQueueSorted:
+    def __init__(self):
+        self.queue = []
+
+    def is_empty(self):
+        return len(self.queue) == 0
+
+    def __len__(self):
+        return len(self.queue)
+
+    def add(self, item, priority):
+        self.queue.append((priority, item))
+        self._quick_sort(self.queue, 0, len(self.queue) - 1)
+
+    def remove(self):
+        try:
+            if not self.is_empty():
+                return self.queue.pop(0)[1]
+            else:
+                raise IndexError("Queue is empty")
+        except IndexError as e:
+            print(f"Error: {e}")
+
+    def peek(self):
+        try:
+            if not self.is_empty():
+                return self.queue[0][1]
+            else:
+                raise IndexError("Queue is empty")
+        except IndexError as e:
+            print(f"Error: {e}")
+
+    def print_all(self):
+        try:
+            if not self.is_empty():
+                print([item[1] for item in self.queue])
+            else:
+                raise IndexError("Queue is empty")
+        except IndexError as e:
+            print(f"Error: {e}")
+
+    def _quick_sort(self, arr, low, high):
+        if low < high:
+            pi = self._partition(arr, low, high)
+            self._quick_sort(arr, low, pi - 1)
+            self._quick_sort(arr, pi + 1, high)
+
+    def _partition(self, arr, low, high):
+        pivot = arr[high][0]
+        i = low - 1
+        for j in range(low, high):
+            if arr[j][0] > pivot:
+                i += 1
+                arr[i], arr[j] = arr[j], arr[i]
+        arr[i + 1], arr[high] = arr[high], arr[i + 1]
+        return i + 1
+myQueue = PriorityQueueSorted()
+
+myQueue.add('Gian', 2)
+myQueue.add('Kezia', 4)
+myQueue.print_all()
+
+print(myQueue.peek())
+print()
+
+myQueue.add('Glen', 8)
+myQueue.add('Christo', 1)
+myQueue.print_all()
+
+print(myQueue.peek())
+print()
+
+print("========REMOVE========")
+myQueue.remove()
+myQueue.print_all()
+
+print()
+
+myQueue.remove()
+myQueue.print_all()
+
+print()
+
+myQueue.remove()
+myQueue.print_all()
+
+print()
+
+myQueue.add('Saya', 7)
+myQueue.print_all()
+
+
+
+class PriorityQueueSorted:
+    def __init__(self):
+        self.queue = []
+
+    def add(self, item, priority):
+        # Insert the item in the queue based on its priority
+        self.queue.append((item, priority))
+        self.queue.sort(key=lambda x: x[1])  # Sort by priority
+
+    def peek(self):
+        # Return the item with the highest priority without removing it
+        if self.queue:
+            return self.queue[0][0]  # Return the item of the first element
+        return None
+
+    def remove(self):
+        # Remove and return the item with the highest priority
+        if self.queue:
+            return self.queue.pop(0)[0]  # Remove and return the item of the first element
+        return None
+
+    def print_all(self):
+        # Print all items in the queue
+        for item, priority in self.queue:
+            print(f"{item}: {priority}")
+
+# Example usage
+myQueue = PriorityQueueSorted()
+
+myQueue.add('Gian', 2)
+myQueue.add('Kezia', 4)
+myQueue.print_all()
+
+print(myQueue.peek())
+print()
+
+myQueue.add('Glen', 8)
+myQueue.add('Christo', 1)
+myQueue.print_all()
+
+print(myQueue.peek())
+print()
+
+print("========REMOVE========")
+myQueue.remove()
+myQueue.print_all()
+
+print()
+
+myQueue.remove()
+myQueue.print_all()
+
+print()
+
+myQueue.remove()
+myQueue.print_all()
+
+print()
+
+myQueue.add('Saya', 7)
+myQueue.print_all()
