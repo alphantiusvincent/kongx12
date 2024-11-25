@@ -1,0 +1,186 @@
+class Node:
+    def __init__(self, parent, data):
+        self.parent = parent
+        self.data = data
+        self.children = []
+
+    def add(self, data):
+        self.children.append(Node(self, data))
+    
+    def operator(self):
+        return self.data
+    
+    def is_root(self):
+        return self.parent is None
+    
+    def is_external(self):
+        return len(self.children) == 0
+
+def generate_tree(number: int):
+    def prime_factorize(number: int) -> list:
+        n = 2
+        factors = []
+        while number > 1:
+            if number % n == 0:
+                factors.append(n)
+                number //= n
+            else:
+                n += 1
+        return factors
+
+    root = Node(None, number)
+    prime_factors = prime_factorize(number)
+    if not prime_factors:
+        return root
+
+    current_node = root
+    for factor in prime_factors:
+        current_node.add(factor)
+        current_node = current_node.children[-1]
+    return root
+
+# Fungsi untuk menghitung hasil plus minus
+def plus_minus(node):
+    if node.is_external():
+        return node.data if node.data % 2 == 0 else -node.data
+    total = 0
+    for child in node.children:
+        total += plus_minus(child)
+    return total + (node.data if node.data % 2 == 0 else -node.data)
+
+# Fungsi untuk mencari kedalaman node daun terdalam
+def find_deepest_leaf(node):
+    if node.is_external():
+        return 0
+    max_depth = 0
+    for child in node.children:
+        max_depth = max(max_depth, find_deepest_leaf(child))
+    return max_depth + 1
+
+def main():
+    root = generate_tree(840)
+    print(f"hasil plus minus = {plus_minus(root)}")
+    print(f"leaf paling dalam = {find_deepest_leaf(root)}")
+    print()
+    root = generate_tree(1200)
+    print(f"hasil plus minus = {plus_minus(root)}")
+    print(f"leaf paling dalam = {find_deepest_leaf(root)}")
+    print()
+    root = generate_tree(8440)
+    print(f"hasil plus minus = {plus_minus(root)}")
+    print(f"leaf paling dalam = {find_deepest_leaf(root)}")
+    print()
+    root = generate_tree(53)
+    print(f"hasil plus minus = {plus_minus(root)}")
+    print(f"leaf paling dalam = {find_deepest_leaf(root)}")
+    print()
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
+
+
+
+
+class Node:
+    def __init__(self, parent, data):
+        self.parent = parent
+        self.data = data
+        self.children = []
+
+    def add(self, data):
+        self.children.append(Node(self, data))
+    
+    def operator(self):
+        return self.data
+    
+    def is_root(self):
+        return self.parent is None
+    
+    def is_external(self):
+        return len(self.children) == 0
+
+def generate_tree(number: int):
+    try:
+        def prime_factorize(number: int) -> list:
+            n = 2
+            factors = []
+            while number > 1:
+                if number % n == 0:
+                    factors.append(n)
+                    number //= n
+                else:
+                    n += 1
+            return factors
+
+        root = Node(None, number)
+        prime_factors = prime_factorize(number)
+        if not prime_factors:
+            return root
+
+        current_node = root
+        for factor in prime_factors:
+            current_node.add(factor)
+            current_node = current_node.children[-1]
+        return root
+    except Exception as e:
+        print(f"Error while generating tree: {e}")
+        return None
+
+# Fungsi untuk menghitung hasil plus minus
+def plus_minus(node):
+    try:
+        if node.is_external():
+            return node.data if node.data % 2 == 0 else -node.data
+        total = 0
+        for child in node.children:
+            total += plus_minus(child)
+        return total + (node.data if node.data % 2 == 0 else -node.data)
+    except AttributeError as e:
+        print(f"Error in plus_minus function: {e}")
+        return 0
+
+# Fungsi untuk mencari kedalaman node daun terdalam
+def find_deepest_leaf(node):
+    try:
+        if node.is_external():
+            return 0
+        max_depth = 0
+        for child in node.children:
+            max_depth = max(max_depth, find_deepest_leaf(child))
+        return max_depth + 1
+    except AttributeError as e:
+        print(f"Error in find_deepest_leaf function: {e}")
+        return 0
+
+def main():
+    try:
+        root = generate_tree(840)
+        if root:
+            print(f"hasil plus minus = {plus_minus(root)}")
+            print(f"leaf paling dalam = {find_deepest_leaf(root)}")
+        print()
+        root = generate_tree(1200)
+        if root:
+            print(f"hasil plus minus = {plus_minus(root)}")
+            print(f"leaf paling dalam = {find_deepest_leaf(root)}")
+        print()
+        root = generate_tree(8440)
+        if root:
+            print(f"hasil plus minus = {plus_minus(root)}")
+            print(f"leaf paling dalam = {find_deepest_leaf(root)}")
+        print()
+        root = generate_tree(53)
+        if root:
+            print(f"hasil plus minus = {plus_minus(root)}")
+            print(f"leaf paling dalam = {find_deepest_leaf(root)}")
+        print()
+    except Exception as e:
+        print(f"Error in main function: {e}")
+
+if __name__ == "__main__":
+    main()
